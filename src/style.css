@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply text-[#6B6B6B];
+}
+
+.sr-only {
+  @apply absolute w-1pxr h-1pxr p-0 m-[-1px] hidden whitespace-nowrap border-0;
+}
+
+.form-input {
+  @apply w-full bg-transparent bg-[#212121] rounded h-54pxr p-16pxr text-white;
+}
+
+.form-input::placeholder {
+  @apply text-[#565656];
+}
+
+.inputMessage {
+  @apply text-12pxr font-normal;
+}
+
+.inputList {
+  @apply appearance-none text-12pxr bg-checkWhite bg-cover w-16pxr h-16pxr;
+}
+
+.inputList:checked {
+  @apply bg-checkBlue;
+}
+
+input#all {
+  @apply bg-checkAllWhite;
+}
+
+input#all:checked {
+  @apply bg-checkAllBlue;
+}
+
+.inputList#marketingSns,
+.inputList#marketingEmail {
+  @apply ml-36pxr;
+}
