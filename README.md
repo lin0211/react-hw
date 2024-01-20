@@ -2,4 +2,4 @@
 
 주간 과제 리드미 링크
 
-- [week1](https://github.com/lin0211/react-hw/src/weeks/week1/README.md)
+- [week1](https://github.com/lin0211/react-hw/tree/main/src/weeks/week1)
