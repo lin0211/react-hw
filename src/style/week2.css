@@ -1,0 +1,109 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-[#f4f6f8];
+}
+
+.widget {
+  @apply w-192pxr border border-[#EBEBEA] rounded-md p-16pxr pe-8pxr relative;
+}
+
+.text {
+  @apply flex flex-col w-118pxr border;
+}
+
+figure {
+  @apply w-50pxr h-50pxr absolute top-11pxr right-2;
+} */
+
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f4f6f8;
+  font-family: pretendard;
+}
+
+.carousel {
+  width: 477px;
+  height: 144px;
+  overflow: hidden;
+  background-color: #fff;
+  padding: 36px;
+  overflow-x: scroll;
+}
+
+.carousel-inner {
+  display: flex;
+  gap: 8px;
+}
+
+.widget {
+  flex: 0 0 192px;
+  white-space: nowrap;
+  /* width: 192px; */
+  height: 72px;
+  border: 1px solid #ebebea;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(181, 181, 181, 0.15);
+  position: relative;
+  padding: 18px 8px 18px 16px;
+}
+
+.text {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.mainText {
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 100%;
+  letter-spacing: 0.2px;
+  margin-bottom: 4px;
+}
+
+.subText {
+  color: #6d7478;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 100%; /* 12px */
+  letter-spacing: 0.12px;
+}
+
+.widget-weather .mainText {
+  color: #040404;
+}
+
+.widget-fineDust .mainText {
+  color: #01a9ff;
+}
+
+.widget-kosdaq span:last-child {
+  color: #4284f7;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 100%; /* 12px */
+  letter-spacing: 0.12px;
+}
+
+figure {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  width: 50px;
+  height: 50px;
+  margin: 0;
+  transform: translateY(-50%);
+}
+
+img {
+  width: 50px;
+  height: 50px;
+}
