@@ -1,4 +1,4 @@
-# WEEK1
+# WEEK2 - Widget
 
 ## 과제 소개
 
