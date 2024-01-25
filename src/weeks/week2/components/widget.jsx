@@ -1,6 +1,6 @@
-const Widget = ({ kind, data }) => {
+const Widget = ({ kind, data: { mainText, subText, image } }) => {
   const widgetKind = `widget-${kind}`;
-  const { mainText, subText, image } = data;
+  // const { mainText, subText, image } = data;
   return (
     <div className={`widget ${widgetKind}`}>
       <div className="text">
