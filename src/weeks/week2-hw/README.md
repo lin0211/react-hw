@@ -17,10 +17,10 @@ JSON 데이터를 불러와 마크업에 연결하여 UI를 구현.
 
 ## 개발 환경
 
-vite
-React JS
-Swiper JS
-PocketBase
+- vite
+- React JS
+- Swiper JS
+- PocketBase
 
 <hr>
 
@@ -37,6 +37,7 @@ PocketBase
 ### 과정
 
 **Slide 컴포넌트 만들기**
+
 props로 데이터를 받아 이미지 소스, 대체 텍스트, 이미지 캡션에 해당하는 데이턴 렌더링
 
 [/src/weeks/week2-hw/components/Slide.jsx]
@@ -63,6 +64,7 @@ const pbData = await pb.collection("program_thumbnail").getFullList({
 ```
 
 **Swiper 컴포넌트 사용**
+
 Swiper React Components 사용
 
 - 슬라이드의 갭을 8로, 화면에 보이는 슬라이드 갯수를 6.5로 속성에 넣어줌
