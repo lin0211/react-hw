@@ -1,10 +1,11 @@
 import ReactDOM from "react-dom/client";
-import "./style/reset.css";
-import Week2HW from "./weeks/week2-hw/week2-hw";
 import { StrictMode } from "react";
+import "./style/reset.css";
+import "./style/week3.css";
+import Week3 from "./weeks/week3/week3a";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Week2HW />
+    <Week3 />
   </StrictMode>
 );
