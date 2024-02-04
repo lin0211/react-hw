@@ -1,19 +1,18 @@
 import { useId } from "react";
 
-export const FormInput = ({
+export const FormInputText = ({
   as: ComponentName = "div",
   name,
-  type = "text",
   division = "",
   label,
   placeholder,
   value,
+  defaultValue,
   onChange,
   labelTailWindCss,
   inputTailWindCss,
   hiddenLabel = false,
   inputProps = {},
-  ...restProps
 }) => {
   const id = useId();
   return (
@@ -31,9 +30,10 @@ export const FormInput = ({
       <input
         className={inputTailWindCss}
         id={id}
-        type={type}
+        type="text"
         name={name}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         value={value}
         onChange={onChange}
         {...inputProps}
@@ -41,3 +41,5 @@ export const FormInput = ({
     </ComponentName>
   );
 };
+
+export default FormInputText;

@@ -14,22 +14,6 @@ h2 {
   @apply font-semibold text-lg mx-6;
 }
 
-/* .inputText {
-  @apply bg-transparent border-b mx-2 px-2 w-[60%];
-} */
-
-/* .inputRateCheckbox {
-  @apply appearance-none w-3 h-3 m-1 cursor-pointer;
-}
-
-.inputRateCheckbox::after {
-  @apply content-['★'] w-3 h-3;
-}
-
-.inputRateCheckbox:checked::after {
-  @apply content-['★'] w-3 h-3 text-yellow-300;
-} */
-
 input:focus,
 button:focus,
 select:focus {

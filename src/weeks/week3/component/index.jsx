@@ -1,3 +1,2 @@
 export { Container } from "./container/container";
-export { FormInput } from "./formInput/formInput";
-export { RateCheckBox } from "./rateCheckBox/rateCheckBox";
+export { FormInputText } from "./formInput/formInputText";

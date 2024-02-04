@@ -1,144 +1,194 @@
-import { useState } from "react";
-import { Container, FormInput, RateCheckBox } from "./component";
-import { useId } from "react";
+import { useState, useEffect } from "react";
+import { Container, FormInputText } from "./component";
+import PocketBase from "pocketbase";
 
-const INITIAL_MY_MOVIE_DATA = {
-  id: "",
-  movieTitle: "",
-  movieReview: "",
-  movieRate: 5,
+const pb = new PocketBase(import.meta.env.VITE_PB_API);
+pb.autoCancellation(false);
+
+const INITIAL_FORM_DATA = {
+  inputMovieTitle: "",
+  inputMovieReview: "",
+  inputMovieRate: "",
 };
 
 function Week3() {
   const style = {
     containerStyle:
-      "border-4 border-white border-dashed m-6 relative rounded py-6 min-height-fit",
+      "border-4 border-white border-dashed m-6 relative rounded p-6 min-height-fit",
     titleStyle: "absolute top-[-14px] bg-slate-600 px-4",
-    labelStyle: "inline-block w-14",
-    inputStyle: "inputText",
-    tableStyle: "mt-2 border-2 border-solid m-auto",
-    borderStyle: "p-2 border border-solid border-white",
     buttonStyle:
-      "border-2 border-solid border-slate-600 w-[40%] md:max-w-250pxr m-auto bg-white text-slate-600",
+      "w-100pxr border-2 rounded mx-1 hover:bg-white hover:text-slate-600",
   };
 
-  // const [myMovieFormData, setMyMovieFormData] = useState(INITIAL_MY_MOVIE_DATA);
-  const [myMovieList, setMyMovieList] = useState([]);
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+  const [movieReviewLists, setMovieReviewLists] = useState([]);
 
-  // setMyMovieList({
-  //   id: "01",
-  //   movieTitle: "콘스탄틴",
-  //   movieReview: "짱이지",
-  //   movieRate: 5,
-  // });
+  const transferToStarRate = (rate) => {
+    const rateNumber = rate.slice(-1);
+    return "⭐".repeat(rateNumber);
+  };
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setMyMovieFormData({ ...myMovieFormData, [name]: value });
-  // };
-  const handleSubmit = (e) => {
+  const getPbDataLists = async () => {
+    return await pb
+      .collection("Movie_Review")
+      .getFullList({
+        sort: "created",
+      })
+      .then((data) => {
+        setMovieReviewLists(data);
+      });
+  };
+
+  const createPbDataList = async (data) => {
+    await pb.collection("Movie_Review").create(data);
+    getPbDataLists();
+  };
+
+  const deletePbDataList = async (id) => {
+    await pb.collection("Movie_Review").delete(id);
+    getPbDataLists();
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    setMyMovieList((prevMyMovieList) => [...prevMyMovieList, data]);
-    // console.log(data);
-    // setMyMovieFormData(INITIAL_MY_MOVIE_DATA);
+    const inputData = Object.fromEntries(formData.entries());
+    const data = {
+      title: inputData.inputMovieTitle,
+      review: inputData.inputMovieReview,
+      rate: inputData.inputMovieRate,
+    };
+    createPbDataList(data);
+    handleFormReset();
   };
-  // console.log(myMovieList);
+
+  const handleFormReset = () => {
+    setFormData(INITIAL_FORM_DATA);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const nextFormData = {
+      ...formData,
+      [name]: value,
+    };
+    setFormData(nextFormData);
+  };
+
+  useEffect(() => {
+    getPbDataLists();
+  }, []);
 
   return (
     <section>
-      <h1>내 맘대로 영화 평가</h1>
-      <Container
-        as="article"
-        title="영화 추가"
-        style={style.containerStyle}
-        titleStyle={style.titleStyle}
-      >
-        <form onSubmit={handleSubmit}>
-          <ul className="flex flex-col gap-2">
-            <FormInput
-              as="li"
-              label="제목"
-              name="movieTitle"
-              defaultValue={INITIAL_MY_MOVIE_DATA.movieTitle}
-              // value={myMovieFormData.movieTitle}
-              division=":"
-              labelTailWindCss={style.labelStyle}
-              inputTailWindCss={style.inputStyle}
-              // onChange={handleChange}
-            ></FormInput>
-            <FormInput
-              as="li"
-              label="리뷰"
-              name="movieReview"
-              defaultValue={INITIAL_MY_MOVIE_DATA.movieReview}
-              // value={myMovieFormData.movieReview}
-              division=":"
-              labelTailWindCss={style.labelStyle}
-              inputTailWindCss={style.inputStyle}
-              // onChange={handleChange}
-            ></FormInput>
-            <li>
-              {/* <RateCheckBox
-                // value={myMovieFormData.movieRate}
-                defaultValue={INITIAL_MY_MOVIE_DATA.movieRate}
-              ></RateCheckBox> */}
-            </li>
-            <li>
-              <button className={style.buttonStyle} type="submit">
-                추가
-              </button>
-              <button className={style.buttonStyle} type="reset">
-                리셋
-              </button>
-            </li>
-          </ul>
-        </form>
-      </Container>
+      <h1>내 맘대로 영화 평가🎬</h1>
       <Container
         as="article"
         title="리스트"
         style={style.containerStyle}
         titleStyle={style.titleStyle}
       >
-        <table className={style.tableStyle}>
-          <colgroup>
-            <col width={150} />
-            <col width={300} />
-            <col width={100} />
-          </colgroup>
-          <thead>
-            <tr>
-              <th scope="col" className={style.borderStyle}>
-                제목
+        <table className="border-separate border-spacing-1pxr m-auto">
+          <thead className="bg-gray-800">
+            <tr className="border border-white">
+              <th scope="col" className="align-middle p-1 lg:p-3">
+                No.
               </th>
-              <th scope="col" className={style.borderStyle}>
-                코멘트
+              <th scope="col" className="align-middle p-1 lg:p-3">
+                Title
               </th>
-              <th scope="col" className={style.borderStyle}>
-                별점
+              <th scope="col" className="align-middle p-1 lg:p-3">
+                Review
+              </th>
+              <th scope="col" className="align-middle p-1 lg:p-3">
+                Rate
+              </th>
+              <th scope="col" className="align-middle p-1 lg:p-3">
+                Delete
               </th>
             </tr>
           </thead>
-          {myMovieList &&
-            myMovieList.map((list) => {
-              console.log(list);
-              return <div key={list.id}>{list.title}</div>;
-            })}
-          <tbody>
-            {/* {myMovieList &&
-              myMovieList.map((a, index) => {
+          <tbody className="bg-gray-700">
+            {movieReviewLists &&
+              movieReviewLists.map((list, index) => {
                 return (
-                  <tr key={`NEMAMDAERO+ ${index}`}>
-                    <td>{a.title}</td>
-                    <td>{a.comment}</td>
-                    <td>{a.rate}</td>
+                  <tr key={list.id}>
+                    <td className="align-middle p-1 lg:p-2">{index + 1}</td>
+                    <td className="align-middle p-1 lg:p-2">{list.title}</td>
+                    <td className="align-middle p-1 lg:p-2">{list.review}</td>
+                    <td className="align-middle p-1 lg:p-2">
+                      {transferToStarRate(list.rate)}
+                    </td>
+                    <td className="align-middle">
+                      <button onClick={() => deletePbDataList(list.id)}>
+                        ❌
+                      </button>
+                    </td>
                   </tr>
                 );
-              })} */}
+              })}
           </tbody>
         </table>
+      </Container>
+      <Container
+        as="article"
+        title="영화 추가"
+        style={style.containerStyle}
+        titleStyle={style.titleStyle}
+      >
+        <form
+          onSubmit={handleSubmit}
+          onReset={handleFormReset}
+          className="flex flex-col gap-4"
+        >
+          <ul className="flex flex-col gap-2 justify-center flex-wrap">
+            <FormInputText
+              as="li"
+              name="inputMovieTitle"
+              id="inputMovieTitle"
+              placeholder="영화 제목"
+              hiddenLabel
+              inputTailWindCss="bg-transparent border-b p-1 w-[50vw]"
+              value={formData.inputMovieTitle}
+              onChange={handleChange}
+            />
+            <FormInputText
+              as="li"
+              name="inputMovieReview"
+              id="inputMovieReview"
+              placeholder="영화 리뷰"
+              hiddenLabel
+              inputTailWindCss="bg-transparent border-b p-1 w-[50vw]"
+              value={formData.inputMovieReview}
+              onChange={handleChange}
+            />
+            <li>
+              <label htmlFor="inputMovieRate" className="sr-only"></label>
+              <select
+                name="inputMovieRate"
+                id="inputMovieRate"
+                className="bg-transparent border p-1"
+                value={formData.inputMovieRate}
+                onChange={handleChange}
+              >
+                <option value="">별점</option>
+                <option value="별점5">⭐⭐⭐⭐⭐</option>
+                <option value="별점4">⭐⭐⭐⭐</option>
+                <option value="별점3">⭐⭐⭐</option>
+                <option value="별점2">⭐⭐</option>
+                <option value="별점1">⭐</option>
+              </select>
+            </li>
+          </ul>
+          <div role="group" className="">
+            <button type="submit" className={style.buttonStyle}>
+              추가
+            </button>
+            <button type="reset" className={style.buttonStyle}>
+              지우기
+            </button>
+          </div>
+        </form>
       </Container>
     </section>
   );

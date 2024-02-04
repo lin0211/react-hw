@@ -5,3 +5,4 @@
 - [week1](https://github.com/lin0211/react-hw/tree/main/src/weeks/week1)
 - [week2-widget](https://github.com/lin0211/react-hw/tree/main/src/weeks/week2)
 - [week2-homework](https://github.com/lin0211/react-hw/tree/main/src/weeks/week2-hw)
+- [week3](https://github.com/lin0211/react-hw/tree/main/src/weeks/week3)
