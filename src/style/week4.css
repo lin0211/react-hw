@@ -1,0 +1,21 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+body {
+  @apply bg-[#fff12e];
+}
+
+/* h1 {
+  @apply font-bold text-32pxr m-8;
+}
+
+h2 {
+  @apply font-semibold text-lg mx-6;
+}
+
+input:focus,
+button:focus,
+select:focus {
+  @apply outline-white outline-1;
+} */

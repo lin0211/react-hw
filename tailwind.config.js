@@ -35,6 +35,7 @@ export default {
         checkAllBlue: 'url("/week1/check_filled_blue.svg")',
         checkWhite: 'url("/week1/check_white.svg")',
         checkBlue: 'url("/week1/check_blue.svg")',
+        kakao: 'url("/week4/kakaotalk.png")',
       },
     },
     fontFamily: {
